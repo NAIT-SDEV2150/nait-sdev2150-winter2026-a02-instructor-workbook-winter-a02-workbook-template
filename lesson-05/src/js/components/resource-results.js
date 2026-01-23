@@ -35,6 +35,9 @@ class ResourceResults extends HTMLElement {
   }
 
   // TODO: Stage 2: Observe the `source` attribute
+  static get observedAttributes() {
+    return ['source'];
+  }
 
   set results(data) {
     this.#results = data;
@@ -50,13 +53,37 @@ class ResourceResults extends HTMLElement {
     this.#applyFilters();
   }
 
-  // TODO: Stage 2: Private method to fetch data from the provided source URL
-
   // TODO: Stage 2: When `source` changes:
   // - Avoid refetching if the value is unchanged
   // - fetch(source)
   // - handle loading and error states
   // - set results with fetched data
+
+  // Private method to fetch data from the provided source URL
+  async #fetchData(source) {
+    try {
+      const response = await fetch(source);
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      this.results = data;
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'source' && oldValue !== newValue) {
+      // Check if connected before fetching
+      if (this.isConnected) {
+        // Fetch new data from the source URL
+        this.#fetchData(newValue);
+      }
+    }
+  }
 
   _handleResultClick(event) {
     const button = event.target.closest('button[data-id]');
