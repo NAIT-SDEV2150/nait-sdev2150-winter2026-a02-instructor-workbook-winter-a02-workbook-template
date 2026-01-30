@@ -28,8 +28,6 @@ npm run dev
 5. Open the provided development server URL in your browser
 6. You should see the **NAIT Resource Directory** loading data from the hard-coded results.
 
----
-
 ## Lesson focus
 
 In this lesson, we introduce **asynchronous JavaScript** and the **fetch API**.
@@ -42,8 +40,6 @@ We will extend the reactive, component-based application built in previous lesso
 
 We are still not using a framework. The goal is to understand the mental model that frameworks later abstract.
 
----
-
 ## Backend overview [[backend/README.md](backend/README.md)]
 
 A local backend server is included for this example.
@@ -54,8 +50,6 @@ A local backend server is included for this example.
 
 You do **not** need to modify the backend.
 
----
-
 ## Strategy
 
 We will approach async data loading in two stages.
@@ -64,8 +58,6 @@ We will approach async data loading in two stages.
 2. **Stage 2:** Move fetching responsibility into the component using a `source` attribute
 
 This allows us to compare two common architectural patterns.
-
----
 
 ## Stage 1: Fetch and coordinate data in `main.js` (app shell/container approach)
 
@@ -79,8 +71,6 @@ Fetching in `main.js` makes the async flow very explicit:
 - Components are updated
 
 This is the easiest place to reason about `async` and `await`.
-
----
 
 ### Step 1: Fetch resources on page load
 
@@ -97,8 +87,6 @@ const response = await fetch('http://localhost:3000/resources');
 const data = await response.json();
 ```
 
----
-
 ### Step 2: Handle async states explicitly
 
 Before updating components, consider:
@@ -107,8 +95,6 @@ Before updating components, consider:
 - What happens if the request fails?
 
 For now, we will focus on the **happy path**, but note where loading and error handling could be added.
-
----
 
 ### Step 3: Pass fetched data into components
 
@@ -119,13 +105,9 @@ Once data is available:
 
 > Components render based on data, ***regardless of where the data comes from***.
 
----
-
 ## Stage 2: Fetching inside the component with a `source` attribute
 
 Now that we understand async data flow, we refactor toward a more reusable design.
-
----
 
 ### Setting a `source` attribute
 
@@ -141,8 +123,6 @@ When the `source` attribute is set:
 - The component manages its own loading and error states
 - The component renders when data arrives
 
----
-
 ### Why use a `source` attribute
 
 This approach:
@@ -152,8 +132,6 @@ This approach:
 - Introduces attribute-driven reactivity
 
 Changing the attribute changes the data.
-
----
 
 ### Implementing attribute-driven fetch
 
@@ -166,8 +144,6 @@ In `<resource-results>`:
 This introduces a new reactive pattern:
 
 > Attribute change -> async side effect -> state update -> render
-
----
 
 ## Comparing the two approaches
 
@@ -182,8 +158,6 @@ Cons:
 - `main.js` can grow large over time
 - Components depend on external coordination
 
----
-
 ### Fetch inside the component (`source` attribute)
 
 Pros:
@@ -197,8 +171,6 @@ Cons:
 
 Both approaches are valid. The choice depends on scale and reuse needs.
 
----
-
 ## Assessment
 
 - Fetch resources from the backend API
@@ -211,8 +183,6 @@ Stretch goals:
 
 - Add a loading state to the results component
 - Add basic error handling for failed requests to the results component
-
----
 
 ## Push to your GitHub workbook repo
 
