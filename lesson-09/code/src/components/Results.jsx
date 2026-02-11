@@ -14,16 +14,16 @@ export default function Results() {
         </div>
 
         <ul className="divide-y divide-gray-200">
-          {resources.map((r) => (
+          {resources.map((resource) => (
             <ResultsItem
-              key={r.id}
-              title={r.title}
-              category={r.category}
-              summary={r.summary}
-              location={r.location}
+              key={resource.id}
+              title={resource.title}
+              category={resource.category}
+              summary={resource.summary}
+              location={resource.location}
             >
               {/* children: optional badge content */}
-              {r.openNow && (
+              {resource.openNow && (
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800">
                   Open now
                 </span>
