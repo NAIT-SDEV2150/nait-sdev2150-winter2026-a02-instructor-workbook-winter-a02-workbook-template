@@ -1,7 +1,12 @@
+import { useState } from 'react';
 import Card from './ui/Card';
 
 // src/components/Filters.jsx
 export default function Filters() {
+  const [searchTerm, setSearchTerm] = useState('');
+  // selectedCategories = []
+  // openNowOnly = bool
+
   return (
     <Card title="Filters">
       <div className="space-y-4 p-4">
@@ -15,8 +20,13 @@ export default function Filters() {
               type="text"
               placeholder="Try: tutoring, mental health, bursary"
               className="w-full rounded border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-200"
+
+              onChange={(e) => { setSearchTerm(e.target.value) }}
+              value={searchTerm}
+
             />
           </div>
+          <p>Our search term: {searchTerm}</p>
 
           <hr className="border-gray-200" />
 
